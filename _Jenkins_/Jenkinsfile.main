@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('main@master')
+@Library('main@feat/cmake-integration')
 // ///////////////////////////////////////////
 import library.Main.*
 // import hudson.model.*
