@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+@Library('main@master')
+// ///////////////////////////////////////////
+import library.Main.*
+// import hudson.model.*
+import hudson.EnvVars
+import groovy.transform.Field
+// ///////////////////////////////////////////
+def job = new api.job()
+def pipeline = new api.pipeline.sequential()
+// ///////////////////////////////////////////
+M_BuildTarget=["Slave"]
+M_BuildTargetMain=["-"]
+//////////////////
+env.M_Project = "CMake"
+env.M_RepositoryUrl="github.com/iFeelSmart/T4D-Sample-CMake.git"
+env.M_NotificationLvl=1
+env.M_SlackChannel="ci-dev"
+//M_NotificationLvl0->Only Notif when build is failing
+//M_NotificationLvl1->Notif only when build is finished
+//M_NotificationLvl2->Notif Start + Build finished
+//M_NotificationLvl3->LVL2 + Warning
+//M_NotificationLvl4->Jenkins Log Lvl
+
+
+job.start()
+pipeline.workspace(M_BuildTarget,"Configure","start")
+
+pipeline.exec(M_BuildTargetMain,"all Linux-host")
+
+pipeline.workspace(M_BuildTarget,"End","end")
+
+
